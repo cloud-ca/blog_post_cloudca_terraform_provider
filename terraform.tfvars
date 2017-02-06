@@ -1,0 +1,6 @@
+api_key           = "AAzzDI5l60DE4ek6i8YmNeFhgUP9l7Q8nNdyGCKHVBBpVX4S16chzIbYgyoV"
+organization_code = "devteam"
+service_code      = "compute-qc"
+environment_name  = "dev"
+admin             = "ccontini"
+read_only         = "acarruthers,fgarcia,pdube"
