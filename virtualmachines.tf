@@ -20,7 +20,7 @@ resource "cloudca_instance" "web_instance" {
 
 resource "cloudca_load_balancer_rule" "lbr" {
   environment_id    = "${cloudca_environment.default.id}"
-  name              = "${var.lbr_name}"
+  name              = "web_instances"
   public_ip_id      = "${cloudca_public_ip.public_endpoint.id}"
   network_id        = "${cloudca_tier.web_network.id}"
   protocol          = "tcp"
@@ -57,7 +57,6 @@ resource "cloudca_volume" "db_volume" {
 
 resource "cloudca_instance" "tools_instance" {
   environment_id   = "${cloudca_environment.default.id}"
-  count            = "${var.environment_name == "prod" ? 1 : 1}"
   name             = "${var.environment_name}-tools-01"
   network_id       = "${cloudca_tier.tools_network.id}"
   template         = "${var.template_name}"

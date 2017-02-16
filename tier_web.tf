@@ -1,7 +1,7 @@
 resource "cloudca_tier" "web_network" {
   environment_id   = "${cloudca_environment.default.id}"
   name             = "web_network"
-  description      = "Web network"
+  description      = "${var.web_network_description}"
   vpc_id           = "${cloudca_vpc.default.id}"
   network_offering = "Load Balanced Tier"
   network_acl_id   = "${cloudca_network_acl.web_acl.id}"
@@ -21,7 +21,7 @@ resource "cloudca_network_acl_rule" "web_allow_in_22" {
   protocol       = "TCP"
   start_port     = 22
   end_port       = 22
-  cidr           = "${var.environment_name == "production" ? "${cloudca_instance.tools_instance.private_ip}/32" : "0.0.0.0/0" }"
+  cidr           = "${var.is_production ? "${cloudca_instance.tools_instance.private_ip}/32" : "0.0.0.0/0" }"
   traffic_type   = "Ingress"
   network_acl_id = "${cloudca_network_acl.web_acl.id}"
 }

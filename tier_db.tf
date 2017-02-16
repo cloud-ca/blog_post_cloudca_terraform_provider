@@ -1,7 +1,7 @@
 resource "cloudca_tier" "db_network" {
   environment_id   = "${cloudca_environment.default.id}"
   name             = "database_network"
-  description      = "Database network"
+  description      = "${var.db_network_description}"
   vpc_id           = "${cloudca_vpc.default.id}"
   network_offering = "Standard Tier"
   network_acl_id   = "${cloudca_network_acl.db_acl.id}"
@@ -21,20 +21,20 @@ resource "cloudca_network_acl_rule" "db_allow_in_22" {
   protocol       = "TCP"
   start_port     = 22
   end_port       = 22
-  cidr           = "${var.environment_name == "production" ? "${cloudca_instance.tools_instance.private_ip}/32" : "0.0.0.0/0" }"
+  cidr           = "${var.is_production ? "${cloudca_instance.tools_instance.private_ip}/32" : "0.0.0.0/0" }"
   traffic_type   = "Ingress"
   network_acl_id = "${cloudca_network_acl.db_acl.id}"
 }
 
 resource "cloudca_network_acl_rule" "db_allow_in_3306" {
   environment_id = "${cloudca_environment.default.id}"
-  count          = "${var.environment_name == "production" ? "${var.frontend_count}" : 1}"
+  count          = "${var.is_production ? "${var.frontend_count}" : 1}"
   rule_number    = "${10 + count.index + 1}"
   action         = "Allow"
   protocol       = "TCP"
   start_port     = 3306
   end_port       = 3306
-  cidr           = "${var.environment_name == "production" ? "${element(cloudca_instance.web_instance.*.private_ip, count.index)}/32" : "0.0.0.0/0" }"
+  cidr           = "${var.is_production ? "${element(cloudca_instance.web_instance.*.private_ip, count.index)}/32" : "0.0.0.0/0" }"
   traffic_type   = "Ingress"
   network_acl_id = "${cloudca_network_acl.db_acl.id}"
 }

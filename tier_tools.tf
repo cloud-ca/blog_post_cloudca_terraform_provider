@@ -1,7 +1,7 @@
 resource "cloudca_tier" "tools_network" {
   environment_id   = "${cloudca_environment.default.id}"
   name             = "tools_network"
-  description      = "Tools network"
+  description      = "${var.tools_network_description}"
   vpc_id           = "${cloudca_vpc.default.id}"
   network_offering = "Standard Tier"
   network_acl_id   = "${cloudca_network_acl.tools_acl.id}"

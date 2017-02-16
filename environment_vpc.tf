@@ -1,3 +1,7 @@
+provider "cloudca" {
+  api_key = "${var.api_key}"
+}
+
 resource "cloudca_environment" "default" {
   service_code      = "${var.service_code}"
   organization_code = "${var.organization_code}"
