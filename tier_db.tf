@@ -26,14 +26,14 @@ resource "cloudca_network_acl_rule" "db_allow_in_22" {
   network_acl_id = "${cloudca_network_acl.db_acl.id}"
 }
 
-resource "cloudca_network_acl_rule" "db_allow_in_3306" {
+resource "cloudca_network_acl_rule" "db_allow_in_ports" {
   environment_id = "${cloudca_environment.default.id}"
-  count          = "${var.is_production ? "${var.frontend_count}" : 1}"
+  count          = "${var.is_production ? var.frontend_count * length(var.database_ports) : 1}"
   rule_number    = "${10 + count.index + 1}"
   action         = "Allow"
   protocol       = "TCP"
-  start_port     = 3306
-  end_port       = 3306
+  start_port     = "${element(var.database_ports, count.index % length(var.database_ports))}"
+  end_port       = "${element(var.database_ports, count.index % length(var.database_ports))}"
   cidr           = "${var.is_production ? "${element(cloudca_instance.web_instance.*.private_ip, count.index)}/32" : "0.0.0.0/0" }"
   traffic_type   = "Ingress"
   network_acl_id = "${cloudca_network_acl.db_acl.id}"

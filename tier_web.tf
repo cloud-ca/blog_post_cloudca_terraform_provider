@@ -26,25 +26,14 @@ resource "cloudca_network_acl_rule" "web_allow_in_22" {
   network_acl_id = "${cloudca_network_acl.web_acl.id}"
 }
 
-resource "cloudca_network_acl_rule" "web_allow_in_80" {
+resource "cloudca_network_acl_rule" "web_allow_in_ports" {
+  count         = "${length(var.web_ports)}"
   environment_id = "${cloudca_environment.default.id}"
-  rule_number    = 5
+  rule_number    = "${count.index + 5}"
   action         = "Allow"
   protocol       = "TCP"
-  start_port     = 80
-  end_port       = 80
-  cidr           = "0.0.0.0/0"
-  traffic_type   = "Ingress"
-  network_acl_id = "${cloudca_network_acl.web_acl.id}"
-}
-
-resource "cloudca_network_acl_rule" "web_allow_in_443" {
-  environment_id = "${cloudca_environment.default.id}"
-  rule_number    = 6
-  action         = "Allow"
-  protocol       = "TCP"
-  start_port     = 443
-  end_port       = 443
+  start_port     = "${element(var.web_ports, count.index)}"
+  end_port       = "${element(var.web_ports, count.index)}"
   cidr           = "0.0.0.0/0"
   traffic_type   = "Ingress"
   network_acl_id = "${cloudca_network_acl.web_acl.id}"
