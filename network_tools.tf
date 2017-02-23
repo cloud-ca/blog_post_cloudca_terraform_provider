@@ -1,4 +1,4 @@
-resource "cloudca_tier" "tools_network" {
+resource "cloudca_network" "tools_network" {
   environment_id   = "${cloudca_environment.default.id}"
   name             = "tools_network"
   description      = "${var.tools_network_description}"
