@@ -20,13 +20,14 @@ resource "cloudca_instance" "web_instance" {
 
 resource "cloudca_load_balancer_rule" "lbr" {
   environment_id    = "${cloudca_environment.default.id}"
+  count             = "${length(var.web_ports)}"
   name              = "web_instances"
   public_ip_id      = "${cloudca_public_ip.public_endpoint.id}"
   network_id        = "${cloudca_network.web_network.id}"
   protocol          = "tcp"
   algorithm         = "leastconn"
-  public_port       = 80
-  private_port      = 80
+  public_port       = "${element(var.web_ports, count.index)}"
+  private_port      = "${element(var.web_ports, count.index)}"
   instance_ids      = ["${cloudca_instance.web_instance.*.id}"]
   stickiness_method = "AppCookie"
 
