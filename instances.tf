@@ -21,7 +21,7 @@ resource "cloudca_instance" "web_instance" {
 resource "cloudca_load_balancer_rule" "lbr" {
   environment_id    = "${cloudca_environment.default.id}"
   count             = "${length(var.web_ports)}"
-  name              = "web_instances"
+  name              = "web_instances_${element(var.web_ports, count.index)}"
   public_ip_id      = "${cloudca_public_ip.public_endpoint.id}"
   network_id        = "${cloudca_network.web_network.id}"
   protocol          = "tcp"
