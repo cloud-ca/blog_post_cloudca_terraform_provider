@@ -1,4 +1,4 @@
-# cloud.ca Terraform provider Example
+# cloud.ca Terraform provider example
 
 This configuration shows a deployment on cloud.ca with:
 - a web network
@@ -9,7 +9,7 @@ The number of web instances and database instances is configurable.
 If the environment is intended to be for production workloads, set the
 variable `is_production` to true and the ACLs for the networks will be
 more strict:
-- SSH acces is allowed only from the instance in the tools network (except for the tools instance itself)
+- SSH access is allowed only from the instance in the tools network (except for the tools instance itself)
 - The database port is blocked on the database network, except for the IPs of the web instances
 
 ## How to use
@@ -17,7 +17,7 @@ more strict:
 - generate ssh keys, with `ssh-keygen -t rsa -b 4096 -N "" -f ./id_rsa` for example
 - create a file terraform.tfvars containing at least the following variables:
   - `api_key`: your cloud.ca API key
-  - `organization_code`: name used to connect to cloud.ca <organization_code>.cloud.ca
+  - `organization_code`: name used to connect to cloud.ca - \<organization_code>.cloud.ca
   - `service_code`: `compute-qc` or `compute-on`
   - `environment_name`: production, dev for example
   - `admin`: a list of users in your organization who will have the `Environment Admin` role
