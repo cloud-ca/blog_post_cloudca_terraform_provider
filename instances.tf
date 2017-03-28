@@ -52,7 +52,7 @@ resource "cloudca_volume" "db_volume" {
 
   name = "DATA_${element(cloudca_instance.db_instance.*.name, count.index)}"
 
-  disk_offering = "${var.db_volume_name}"
+  disk_offering = "${var.db_volume_offering}"
   instance_id   = "${element(cloudca_instance.db_instance.*.id, count.index)}"
 }
 

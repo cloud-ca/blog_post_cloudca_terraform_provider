@@ -61,7 +61,7 @@ variable "compute_offering" {
   default = "1vCPU.1GB"
 }
 
-variable "db_volume_name" {
+variable "db_volume_offering" {
   default = "20GB - 20 IOPS Min."
 }
 variable "database_ports" {
