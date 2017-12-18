@@ -82,5 +82,5 @@ resource "cloudca_port_forwarding_rule" "tools_ssh" {
 }
 
 output "ssh" {
-  value = "Connect with ssh via `ssh ${username}@${cloudca_public_ip.tools_ssh.public_ip}"
+  value = "Connect with ssh via `ssh ${var.username}@${cloudca_public_ip.tools_ssh.ip_address}`"
 }
