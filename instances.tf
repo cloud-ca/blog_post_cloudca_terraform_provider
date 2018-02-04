@@ -2,7 +2,7 @@ data "template_file" "cloudinit" {
   template = "${file("./cloudinit.tpl")}"
 
   vars {
-    public_key  = "${replace(file("./id_rsa.pub"), "\n", "")}"
+    public_key = "${replace(file("./id_rsa.pub"), "\n", "")}"
   }
 }
 
@@ -93,7 +93,7 @@ resource "cloudca_port_forwarding_rule" "tools_ssh" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod 400 /home/core/.ssh/id_rsa"
+      "chmod 400 /home/core/.ssh/id_rsa",
     ]
   }
 }

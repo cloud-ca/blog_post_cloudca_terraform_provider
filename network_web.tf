@@ -27,7 +27,7 @@ resource "cloudca_network_acl_rule" "web_allow_in_22" {
 }
 
 resource "cloudca_network_acl_rule" "web_allow_in_ports" {
-  count         = "${length(var.web_ports)}"
+  count          = "${length(var.web_ports)}"
   environment_id = "${cloudca_environment.default.id}"
   rule_number    = "${count.index + 5}"
   action         = "Allow"

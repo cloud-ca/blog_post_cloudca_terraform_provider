@@ -3,18 +3,19 @@ variable "api_key" {}
 
 # General variables
 variable "is_production" {}
+
 variable "frontend_count" {}
 variable "backend_count" {}
 
 # Environment
 variable "service_code" {}
+
 variable "organization_code" {}
 variable "environment_name" {}
 
 variable "environment_description" {
   default = "Environment for %s workloads"
 }
-
 
 variable "admin" {
   type = "list"
@@ -28,9 +29,11 @@ variable "read_only" {
 variable "vpc_offering" {
   default = "Default VPC offering"
 }
+
 variable "zone_id" {
   default = "QC-2"
 }
+
 variable "vpc_description" {
   default = "VPC for %s workloads"
 }
@@ -64,9 +67,11 @@ variable "compute_offering" {
 variable "db_volume_offering" {
   default = "20GB - 20 IOPS Min."
 }
+
 variable "database_ports" {
-  default = [ 3306 ]
+  default = [3306]
 }
+
 variable "web_ports" {
-  default = [ 80, 443 ]
+  default = [80, 443]
 }
