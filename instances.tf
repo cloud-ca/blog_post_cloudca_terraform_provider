@@ -3,8 +3,6 @@ data "template_file" "cloudinit" {
 
   vars {
     public_key  = "${replace(file("./id_rsa.pub"), "\n", "")}"
-    private_key = "${file("./id_rsa")}"
-    username    = "${var.username}"
   }
 }
 
@@ -79,6 +77,25 @@ resource "cloudca_port_forwarding_rule" "tools_ssh" {
 
   private_port_start = 22
   protocol           = "TCP"
+
+  connection {
+    type        = "ssh"
+    user        = "core"
+    private_key = "${file("./id_rsa")}"
+    host        = "${cloudca_public_ip.tools_ssh.ip_address}"
+    port        = 22
+  }
+
+  provisioner "file" {
+    content     = "${file("./id_rsa")}"
+    destination = "/home/core/.ssh/id_rsa"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod 400 /home/core/.ssh/id_rsa"
+    ]
+  }
 }
 
 output "ssh" {
