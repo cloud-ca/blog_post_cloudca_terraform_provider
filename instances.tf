@@ -98,6 +98,14 @@ resource "cloudca_port_forwarding_rule" "tools_ssh" {
   }
 }
 
+module "ssh_forwarding_web-01" {
+  source = "github.com/vilisseranen/terraform-modules-cloudca-ssh-forwarding"
+
+  environment_id   = "${cloudca_environment.default.id}"
+  vpc_id           = "${cloudca_vpc.default.id}"
+  private_ip_id = "${cloudca_instance.web_instance.0.private_ip_id}"
+}
+
 output "ssh" {
   value = "Connect to the tools machine with `ssh ${var.username}@${cloudca_public_ip.tools_ssh.ip_address} -i id_rsa`"
 }
