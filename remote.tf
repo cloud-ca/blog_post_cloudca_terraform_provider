@@ -1,5 +1,5 @@
 terraform {
   backend "swift" {
-    container = "terraform-state"
+    container = "hashicorp_blog_post_dev"
   }
 }
